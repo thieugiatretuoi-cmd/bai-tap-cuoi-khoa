@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather report</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src ="server.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+     <style>
+        .top-btn.active { outline: 2px solid currentColor; outline-offset: 2px; }
+        /* Thẻ thời tiết */
+        .weather-card { padding: clamp(20px, 2.5vw, 36px); width: 100%; max-width: 900px; box-sizing: border-box; position: relative; z-index: 1; }
+        .weather-city { margin: 0 0 10px; font-size: clamp(1.4rem, 1.9vw, 1.9rem); }
+        .weather-big { font-size: clamp(4.5rem, 8.5vw, 8rem); font-weight: 700; line-height: 1; }
+        .weather-summary { margin: 6px 0 22px; font-size: clamp(1.1rem, 1.5vw, 1.5rem); opacity: .85; }
+        .weather-msg { font-size: clamp(1.1rem, 1.5vw, 1.5rem); }
+        .weather-msg.error { color: #e5484d; }
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 22px; }
+        .stat { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 14px; background: rgba(128, 128, 128, .15); }
+        .stat-label { font-size: clamp(.9rem, 1vw, 1.05rem); opacity: .75; }
+        .stat-value { font-size: clamp(1.4rem, 1.9vw, 2.1rem); font-weight: 600; line-height: 1.15; }
+        .weather-updated { margin-top: 22px; font-size: .95rem; opacity: .65; }
+ 
+    </style>
+</head>
+<body>
+ 
+    <div class="app-container">
+        <div class="rain-container">
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+        </div>
+ 
+ 
+        <aside class="sidebar">
+            <div class="logo-box">
+ 
+    <img src="https://static.jojowiki.com/images/thumb/8/8a/latest/20211109144423/Weather_Report_Stand_Infobox_Manga.png/400px-Weather_Report_Stand_Infobox_Manga.png" width="75" height="125" alt="Weather Logo">
+</div>
+            <nav class="side-nav">
+                <button class="sidebar-btn active" id="today">thời<br>tiết hôm<br>nay</button>
+                <button class="sidebar-btn" id="humidity">độ ẩm</button>
+                <button class="sidebar-btn" id="windSpeed">tốc độ<br>gió</button>
+                <button class="sidebar-btn" id="precipitation">mật độ<br>mưa</button>
+                <button class="sidebar-btn" id="uvIndex">chỉ số<br>tia UV</button>
+                <button class="sidebar-btn" onclick = "window.location.href='keyitem.html'" >⚙️</button>
+                <button class="skin" id="bloodbath">comming soon</button>
+            </nav>
+        </aside>
+ 
+        <main class="main-content">
+            <header class="top-bar" id="topbar">
+                <button class="top-btn" id="hoChiMinh">Hồ Chí Minh</button>
+                <button class="top-btn" id="dongNai">Đồng Nai</button>
+                <button class="top-btn" id="binhDuong">Bình Dương</button>
+            </header>
+            <div class="content-area">
+            </div>
+        </main>
+    </div>
+    <script>
+const skin = document.getElementById('bloodbath');
+const topBar = document.getElementById('topbar'); 
+let bloodInterval;
+ 
+if (skin && topBar) {
+    skin.addEventListener('click', () => {
+        skin.classList.toggle('kamata-kun');
+        
+        if (skin.classList.contains('kamata-kun')) {
+            skin.textContent = "comming soon"; 
+            topBar.classList.add('bleeding'); 
+           
+            bloodInterval = setInterval(createBloodDrop, 300);
+        } else {
+           
+            skin.textContent = "comming soon"; 
+            topBar.classList.remove('bleeding');
+            
+         
+            clearInterval(bloodInterval); 
+        }
+    });
+}
+ 
+function createBloodDrop() {
+    const drop = document.createElement('div');
+    drop.classList.add('blood-drop');
+    
+    drop.style.left = `${Math.random() * 95 + 2}%`; 
+    
+    const width = Math.random() * 8 + 6; 
+    drop.style.width = `${width}px`;
+    
+    // 3. Random tốc độ rơi (Để máu rớt giọt nhanh giọt chậm cho tự nhiên)
+    drop.style.animationDuration = `${Math.random() * 1 + 1}s`; 
+    
+    // Gắn bãi máu vào thanh Topbar
+    topBar.appendChild(drop);
+ 
+    setTimeout(() => {
+        drop.remove();
+    }, 2000);
+}
+    </script>
+    <script src="weatherapp.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Items</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+    <div class="settings-container">
+    <h1 style="width: 100%; text-align: center; margin-top: 10px;">settings</h1>
+        <div class="key-item">
+            <button class="key-item-btn" style="width: 90%; margin-top: 9px;" onclick="window.location.href='index.html'">back</button>
+            <button class="key-item-btn" style="width: 90%; margin-top: 9px;" onclick="window.location.href='../login/login.html'">logout</button>
+                <button class="btn-retro btn-feedback-float" onclick="openFeedback()">📢 GÓP Ý</button>
+
+    <div class="feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-modal">
+            <span class="close-btn" onclick="closeFeedback()">&times;</span>
+            <h2 class="title-retro" style="font-size: 30px;">BẠN NGHĨ GÌ?</h2>
+            <p class="fw-bold">tìm lỗi và gợi ý giúp chúng tôi</p>
+            <textarea class="feedback-textarea" id="feedbackText" rows="4" placeholder="Nhập góp ý của bạn ở đây..."></textarea>
+            <button class="btn-retro btn-danger-retro w-100" onclick="sendFeedback()">GỬI PHẢN HỒI </button>
+        </div>
+    </div>
+    <script>
+        function giveto(id){
+            window.location.href = "index.html?id=" + id;
+        }
+
+        function openFeedback() {
+            document.getElementById("feedbackOverlay").style.display = "flex";
+        }
+
+        function closeFeedback() {
+            document.getElementById("feedbackOverlay").style.display = "none";
+        }
+
+        function sendFeedback() {
+            const textEl = document.getElementById('feedbackText');
+            const text = textEl.value.trim();
+
+            if (!text) {
+                alert('Bạn chưa nhập góp ý nha!');
+                return;
+            }
+
+            alert('Cảm ơn bạn đã góp ý! ❤️');
+            textEl.value = '';
+            closeFeedback();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const overlay = document.getElementById('feedbackOverlay');
+            if (overlay) {
+                overlay.addEventListener('click', function (e) {
+                    if (e.target === overlay) closeFeedback();
+                });
+            }
+           
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeFeedback();
+            });
+        });
+    </script>
+</body>
+</html>

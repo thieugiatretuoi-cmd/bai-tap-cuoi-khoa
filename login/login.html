@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Radar - Login & Register</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Bungee&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="login.js"></script>
+</head>
+<body>
+    
+    <nav class="retro-nav">
+        <span class="retro-brand">
+            <img src="https://i1.sndcdn.com/artworks-iJQMzs8t6OdEoB4X-DkaPPw-t1080x1080.jpg" alt="weather logo">
+            <h2>Weather Report</h2>
+        </span>
+        <div>
+        </div>
+    </nav>
+    <div class="rain"></div>
+        <span> </span>
+        <span> </span>
+        <span> </span>
+        <span> </span>
+        <span> </span>
+        <span> </span>
+        <span> </span>
+        <span> </span>
+<div class="rain rain-far" id="rainFar"></div>
+<div class="rain rain-near" id="rainNear"></div>
+
+<script>
+  function createRain(containerId, amount, options) {
+    const container = document.getElementById(containerId);
+
+    for (let i = 0; i < amount; i++) {
+      const drop = document.createElement("span");
+
+      const size =
+        Math.random() *
+          (options.maxSize - options.minSize) +
+        options.minSize;
+
+      const duration =
+        Math.random() *
+          (options.maxDuration - options.minDuration) +
+        options.minDuration;
+
+      const delay = Math.random() * -duration;
+
+      const left = Math.random() * 120 - 10;
+
+      const wind =
+        Math.random() *
+          (options.maxWind - options.minWind) +
+        options.minWind;
+
+      const angle =
+        Math.random() *
+          (options.maxAngle - options.minAngle) +
+        options.minAngle;
+
+      const opacity =
+        Math.random() *
+          (options.maxOpacity - options.minOpacity) +
+        options.minOpacity;
+
+      drop.className = "drop";
+
+      drop.style.setProperty("--size", `${size}px`);
+      drop.style.setProperty("--width", `${options.width}px`);
+      drop.style.setProperty("--duration", `${duration}s`);
+      drop.style.setProperty("--delay", `${delay}s`);
+      drop.style.setProperty("--left", `${left}%`);
+      drop.style.setProperty("--wind", `${wind}px`);
+      drop.style.setProperty("--angle", `${angle}deg`);
+      drop.style.setProperty("--opacity", opacity);
+      drop.style.setProperty("--blur", `${options.blur}px`);
+
+      container.appendChild(drop);
+    }
+  }
+
+  /* Mưa phía xa */
+  createRain("rainFar", 100, {
+    minSize: 8,
+    maxSize: 18,
+
+    minDuration: 2.5,
+    maxDuration: 5,
+
+    minWind: -30,
+    maxWind: 30,
+
+    minAngle: 8,
+    maxAngle: 14,
+
+    minOpacity: 0.15,
+    maxOpacity: 0.35,
+
+    width: 1,
+    blur: 0.8
+  });
+
+
+createRain("rainNear", 70, {
+    minSize: 20,
+    maxSize: 45,
+
+    minDuration: 0.7,
+    maxDuration: 1.8,
+
+    minWind: 40,
+    maxWind: 100,
+
+    minAngle: 12,
+    maxAngle: 20,
+
+    minOpacity: 0.35,
+    maxOpacity: 0.75,
+
+    width: 2,
+    blur: 0
+  });
+</script>
+
+    <div class="retro-container">
+        <h1 class="titleText" id="formTitle">ĐĂNG NHẬP</h1>
+
+        <div class="toggle-box">
+            <button class="btn-toggle active" id="btnShowLogin" onclick="switchForm('login')">ĐĂNG NHẬP</button>
+            <button class="btn-toggle" id="btnShowRegister" onclick="switchForm('register')">ĐĂNG KÝ</button>
+        </div>
+
+        <div id="msgBox" class="retro-message-box mb-4"></div>
+
+        <form id="loginForm">
+            <div class="input-group-retro">
+                <label>Tên tài khoản / Email</label>
+                <input type="text" class="form-control-retro" id="loginUser" placeholder="name@gmail.com">
+            </div>
+            <div class="input-group-retro">
+                <label>Mật khẩu</label>
+                <input type="password" class="form-control-retro" id="loginPass" placeholder="••••••••">
+            </div>
+            
+            <button type="button" class="btn-retro btn-login-submit" onclick="login()">
+                VÀO HỆ THỐNG
+            </button>
+            
+            <a href="#" class="back-link">Quên mật khẩu?</a>
+        </form>
+
+        <form id="registerForm" class="d-none">
+            <div class="input-group-retro">
+                <label>Tên hiển thị</label>
+                <input type="text" class="form-control-retro" id="registerName" placeholder="VD: erinco pucci">
+            </div>
+            <div class="input-group-retro">
+                <label>Email</label>
+                <input type="email" class="form-control-retro" id="registerEmail" placeholder="erincopucciemail@gmail.com">
+            </div>
+            <div class="input-group-retro">
+                <label>Mật khẩu</label>
+                <input type="password" class="form-control-retro" id="registerPassword" placeholder="••••••••">
+            </div>
+            <div class="input-group-retro">
+                <label>Nhập lại mật khẩu</label>
+                <input type="password" class="form-control-retro" id="registerConfirmPassword" placeholder="••••••••">
+            </div>
+            
+            <button type="button" class="btn-retro btn-login-submit" onclick="tao_tai_khoan()">
+                TẠO TÀI KHOẢN
+            </button>
+        </form>
+    </div>
+</body>
+</html>
